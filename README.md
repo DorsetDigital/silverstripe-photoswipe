@@ -4,6 +4,8 @@ Provides a simple way to embed a responsive image gallery on a page using the Ph
 
 Includes gallery functionality along with a lazy-loader for the thumbnails to help with page-load efficiency.
 
+If you are using Elemental, a version of this add-on to work in a page block can be found here: https://github.com/DorsetDigital/silverstripe-photoswipe-elemental
+
 # Requirements
 * Silverstripe 4.x
 * bummzack/sortablefile
