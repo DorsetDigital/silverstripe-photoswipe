@@ -29,13 +29,11 @@
         animation: reveal 1s ease-out;
       }
     }
-
   }
 
   a.progressive:not(.replace) {
     cursor: default;
   }
-
 }
 
 @keyframes reveal {
