@@ -4,7 +4,7 @@
                 itemtype="http://schema.org/ImageObject">
             <a itemprop="contentUrl" data-size="{$ScaleWidth(1024).Width}x{$ScaleWidth(1024).Height}" data-index="$Pos"
                class="progressive replace" data-thumb="$ScaleWidth(500).CropHeight(300).URL"
-               href="$ScaleWidth(1024).URL">
+               href="$ScaleWidth(1024).URL" data-caption="<% if $Up.IncludeTitles == 1 %>$Title<% end_if %>">
                 <img src="$ScaleWidth(15).CropHeight(9).URL" class="img-fluid img-thumbnail preview"
                      alt="$Top.Title Image"/>
             </a>

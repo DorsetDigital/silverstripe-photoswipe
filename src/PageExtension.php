@@ -3,12 +3,17 @@
 namespace DorsetDigital\SilverstripePhotoswipe;
 
 use SilverStripe\Assets\Image;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 
 class PageExtension extends DataExtension
 {
+
+    private static $db = [
+        'IncludeTitles' => 'Boolean'
+    ];
 
     private static $many_many = [
         'GalleryImages' => Image::class
@@ -26,9 +31,12 @@ class PageExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->addFieldToTab('Root.Gallery', SortableUploadField::create(
-            'GalleryImages', $this->owner->fieldLabel('Images')
-        )->setFolderName('galleryimages')->setAllowedFileCategories('image/supported'));
+        $fields->addFieldsToTab('Root.Gallery', [
+            CheckboxField::create('IncludeTitles')
+                ->setTitle(_t(__CLASS__ . '.inctitles', "Include image titles as captions?")),
+            SortableUploadField::create('GalleryImages', $this->owner->fieldLabel('Images')
+            )->setFolderName('galleryimages')->setAllowedFileCategories('image/supported')
+        ]);
     }
 
     public function getGallery()

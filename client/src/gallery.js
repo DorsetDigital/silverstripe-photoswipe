@@ -83,15 +83,11 @@ if (window.addEventListener && window.requestAnimationFrame && document.getEleme
     });
 
    }
-
   }
-
  }, false);
 
 
 jQuery(document).ready(function ($) {
-
-
  (function ($) {
   var $pswp = $('.pswp')[0];
   var image = [];
@@ -109,13 +105,14 @@ jQuery(document).ready(function ($) {
              var item = {
               src: $href,
               w: $width,
-              h: $height
-             }
+              h: $height,
+              title: $(this).data('caption')
+             };
 
              items.push(item);
             });
             return items;
-           }
+           };
 
    var items = getItems();
 
@@ -128,7 +125,7 @@ jQuery(document).ready(function ($) {
      index: $index,
      bgOpacity: 0.9,
      showHideOpacity: true
-    }
+    };
 
     var lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, items, options);
     lightBox.init();
