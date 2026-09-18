@@ -1,0 +1,10 @@
+---
+Name: silverstripe-photoswipe-gallery
+---
+DorsetDigital\SilverstripePhotoswipe\Pages\GalleryPage:
+  extensions:
+    - DorsetDigital\SilverstripePhotoswipe\Extensions\GalleryExtension
+
+DorsetDigital\SilverstripePhotoswipe\Controllers\GalleryPageController:
+  extensions:
+    - DorsetDigital\SilverstripePhotoswipe\Extensions\GalleryControllerExtension

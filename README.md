@@ -1,57 +1,151 @@
-# silverstripe-photoswipe
+# Silverstripe PhotoSwipe
 
-Provides a simple way to embed a responsive image gallery on a page using the Photoswipe library.
+Responsive image galleries for Silverstripe CMS 6, powered by PhotoSwipe 5.
 
-Includes gallery functionality along with a lazy-loader for the thumbnails to help with page-load efficiency.
+The module provides a ready-to-use Gallery Page, reusable extensions for adding a gallery to your own page types, and optional Elemental integration. PhotoSwipe and the default gallery layout use modern JavaScript and CSS with no jQuery or Bootstrap dependency.
 
-If you are using Elemental, a version of this add-on to work in a page block can be found here: https://github.com/DorsetDigital/silverstripe-photoswipe-elemental
+## Requirements
 
-# Requirements
-* Silverstripe 4.x
-* bummzack/sortablefile
+- PHP 8.3+
+- Silverstripe CMS 6
+- [bummzack/sortablefile](https://github.com/bummzack/sortablefile) 3.x
 
-The front-end code currently requires jQuery to work.  If you don't already have it on your site, it can be added with a simple requirements call, eg:
+[dnadesign/silverstripe-elemental](https://github.com/silverstripe/silverstripe-elemental) is optional. If it is installed, a PhotoSwipe Gallery element is automatically available.
 
-`Requirements::javascript('https://code.jquery.com/jquery-3.3.1.min.js');` 
+## Installation
 
-# Installation
-* Install the code with `composer require dorsetdigital/silverstripe-photoswipe`
-* Run a `dev/build?flush` to update your project
+Install the module with Composer:
 
-# Usage
+```bash
+composer require dorsetdigital/silverstripe-photoswipe:^2
+```
 
-By default, the module doesn't add anything to your site.  You can choose which page types you want extend with the addition of a yml config file.
-You will need to add an extension to the Page class itself and to its controller for all the features to work.
-The sample below adds gallery functionality to the base page class, so it would be available on any pages which extend that:
+Then run a development build:
+
+```bash
+vendor/bin/sake dev/build flush=1
+```
+
+The module includes its compiled frontend assets, so applications installing it through Composer do not need to run npm or Vite.
+
+## Gallery Page
+
+A `Gallery Page` page type is included and enabled by default. Create one in the CMS, add images to the Gallery tab and reorder them as required.
+
+The supplied page template renders the page content followed by the gallery. A project can override the template in the usual Silverstripe way.
+
+If a project does not want the bundled page type to be available in the CMS, disable it in project YAML:
 
 ```yaml
-
----
-Name: photoswipe-gallery
----
-
-PageController:
-  extensions:
-    - DorsetDigital\SilverstripePhotoswipe\ControllerExtension
-
-Page:
-  extensions:
-    - DorsetDigital\SilverstripePhotoswipe\PageExtension
+DorsetDigital\SilverstripePhotoswipe\Pages\GalleryPage:
+  hide_ancestor: true
 ```
 
+## Adding a gallery to another page type
 
-To add the gallery to your actual page, you also need to add a new template variable, eg:
+Apply `GalleryExtension` to the page class and `GalleryControllerExtension` to its controller:
 
-```php
-<div class="mygalleryholder">
-  $Gallery
-</div>
+```yaml
+---
+Name: app-photoswipe
+After:
+  - '#silverstripe-photoswipe-gallery'
+---
+App\Model\Page\ContentPage:
+  extensions:
+    - DorsetDigital\SilverstripePhotoswipe\Extensions\GalleryExtension
+
+App\Control\ContentPageController:
+  extensions:
+    - DorsetDigital\SilverstripePhotoswipe\Extensions\GalleryControllerExtension
 ```
 
-The template which produces the standard gallery markup can be overridden, but please note that some of the markup structure is required to make everything work!
+The page gains a Gallery tab in the CMS. Render the gallery in its template with:
 
+```ss
+$Gallery
+```
 
-# Credits
+Frontend requirements are only added when the page has gallery images.
 
-* The superb PhotoSwipe library - http://photoswipe.com/
-* Bummzack's sortable file extension for SS4 - https://github.com/bummzack/sortablefile
+## Elemental
+
+Elemental is an optional dependency. When `dnadesign/silverstripe-elemental` is installed, the module automatically exposes a `PhotoSwipe Gallery` block. No additional PhotoSwipe YAML is required.
+
+A project without Elemental can install and use this module normally. If Elemental is installed later, run `dev/build flush=1` and the gallery element will become available.
+
+## Frontend and styling
+
+Gallery images are rendered as ordinary links, so the gallery remains usable without JavaScript. PhotoSwipe progressively enhances those links into the lightbox.
+
+The supplied template generates WebP images with a maximum width of 1600px for the lightbox and 550px for thumbnails. Images include intrinsic dimensions, lazy loading and asynchronous decoding.
+
+The module always includes the CSS required by PhotoSwipe. It also includes a lightweight responsive CSS Grid layout by default. Browsers with CSS masonry support receive a progressive masonry enhancement.
+
+To use your project's own gallery layout while retaining PhotoSwipe's functional CSS, disable only the module's default gallery styling:
+
+```yaml
+DorsetDigital\SilverstripePhotoswipe\Services\GalleryRequirements:
+  include_default_css: false
+```
+
+The primary styling hooks are:
+
+```text
+.photoswipe-gallery
+.photoswipe-gallery__item
+.photoswipe-gallery__link
+.photoswipe-gallery__image
+```
+
+## Templates
+
+The shared gallery templates are:
+
+```text
+DorsetDigital/SilverstripePhotoswipe/Includes/Gallery.ss
+DorsetDigital/SilverstripePhotoswipe/Includes/GalleryImage.ss
+```
+
+Both the Gallery Page and Elemental implementation use the same gallery rendering, so project-level template overrides can be shared between them.
+
+## Upgrading from 1.x
+
+Version 2 is a major release targeting Silverstripe CMS 6 and PhotoSwipe 5. It removes the old jQuery/PhotoSwipe 4 frontend and contains breaking namespace and implementation changes.
+
+The former `dorsetdigital/silverstripe-photoswipe-elemental` package has been folded into this module. New installations should not install the separate Elemental package.
+
+### Experimental legacy Elemental migration
+
+An experimental build task is included for sites migrating existing gallery blocks from `dorsetdigital/silverstripe-photoswipe-elemental`:
+
+```bash
+vendor/bin/sake migrate-legacy-photoswipe-elemental-galleries
+```
+
+This task updates the stored Elemental class name while preserving the existing gallery table and image relationships.
+
+**This migration has not yet been verified against a production legacy installation. Back up the database before running it and test the migration in a non-production environment first. Version 2 does not currently guarantee automatic migration of legacy Elemental galleries.**
+
+## Development
+
+Frontend source is in `client/src` and is built with Vite.
+
+```bash
+npm install
+npm run build
+```
+
+For development with automatic rebuilds:
+
+```bash
+npm run dev
+```
+
+Compiled files in `client/dist` are committed to the package because they are exposed as Silverstripe module resources and consumed directly by Composer installations.
+
+## Credits
+
+- [PhotoSwipe](https://photoswipe.com/)
+- [SortableFile](https://github.com/bummzack/sortablefile)
+- [Silverstripe Elemental](https://github.com/silverstripe/silverstripe-elemental)
