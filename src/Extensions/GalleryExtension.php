@@ -7,6 +7,8 @@ use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use DorsetDigital\SchemaManager\Model\Schema\ImageGallerySchema;
+use DorsetDigital\SilverstripePhotoswipe\Pages\GalleryPage;
 
 class GalleryExtension extends Extension
 {
@@ -42,6 +44,41 @@ class GalleryExtension extends Extension
     public function hasGalleryImages(): bool
     {
         return $this->owner->GalleryImages()->exists();
+    }
+
+    public function updateSchemaManagerEntities(array &$entities): void
+    {
+        if (!class_exists(ImageGallerySchema::class) || !$this->hasGalleryImages()) {
+            return;
+        }
+
+        $pageURL = $this->owner->AbsoluteLink();
+        $schema = ImageGallerySchema::create(
+            $pageURL,
+            $this->owner->Title,
+            $this->owner->MetaDescription ?: null
+        );
+
+        foreach ($this->getSortedGalleryImages() as $image) {
+            $schema->addImage(
+                $image->getAbsoluteURL(),
+                $image->Title ?: null,
+                null,
+                $image->getWidth(),
+                $image->getHeight()
+            );
+        }
+
+        $firstImage = $this->getSortedGalleryImages()->first();
+        if ($firstImage) {
+            $schema->setThumbnail($firstImage->getAbsoluteURL());
+        }
+
+        if ($this->owner instanceof GalleryPage) {
+            $schema->setMainEntityOfPage($pageURL);
+        }
+
+        $entities[] = $schema;
     }
 
     public function getGallery(): ?DBHTMLText

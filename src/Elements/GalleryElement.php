@@ -12,6 +12,7 @@ if (!class_exists(BaseElement::class)) {
 use DorsetDigital\SilverstripePhotoswipe\Controllers\GalleryElementController;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
+use DorsetDigital\SchemaManager\Model\Schema\ImageGallerySchema;
 
 class GalleryElement extends BaseElement
 {
@@ -58,6 +59,42 @@ class GalleryElement extends BaseElement
     public function hasGalleryImages(): bool
     {
         return $this->GalleryImages()->exists();
+    }
+
+    public function updateSchemaManagerEntities(array &$entities): void
+    {
+        if (!class_exists(ImageGallerySchema::class) || !$this->hasGalleryImages()) {
+            return;
+        }
+
+        $page = $this->getPage();
+        if (!$page) {
+            return;
+        }
+
+        $schema = ImageGallerySchema::create(
+            $page->AbsoluteLink(),
+            $this->Title ?: null,
+            null,
+            (string) $this->ID
+        );
+
+        foreach ($this->getSortedGalleryImages() as $image) {
+            $schema->addImage(
+                $image->getAbsoluteURL(),
+                $image->Title ?: null,
+                null,
+                $image->getWidth(),
+                $image->getHeight()
+            );
+        }
+
+        $firstImage = $this->getSortedGalleryImages()->first();
+        if ($firstImage) {
+            $schema->setThumbnail($firstImage->getAbsoluteURL());
+        }
+
+        $entities[] = $schema;
     }
 
     public function getType(): string
