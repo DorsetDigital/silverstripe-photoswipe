@@ -5,9 +5,9 @@ namespace DorsetDigital\SilverstripePhotoswipe\Extensions;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 
-class GalleryExtension extends DataExtension
+class GalleryExtension extends Extension
 {
     private static $many_many = [
         'GalleryImages' => Image::class,
