@@ -1,0 +1,14 @@
+{
+  "name": "silverstripe-photoswipe",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "dependencies": {
+    "photoswipe": "^5.4.4"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}
