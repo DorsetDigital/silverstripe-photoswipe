@@ -6,7 +6,7 @@ use Bummzack\SortableFile\Forms\SortableUploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Core\Extension;
-use SilverStripe\View\ViewableData;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 
 class GalleryExtension extends Extension
 {
@@ -44,7 +44,7 @@ class GalleryExtension extends Extension
         return $this->owner->GalleryImages()->exists();
     }
 
-    public function getGallery(): ?ViewableData
+    public function getGallery(): ?DBHTMLText
     {
         if (!$this->hasGalleryImages()) {
             return null;
