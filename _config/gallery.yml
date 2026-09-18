@@ -8,3 +8,7 @@ DorsetDigital\SilverstripePhotoswipe\Pages\GalleryPage:
 DorsetDigital\SilverstripePhotoswipe\Controllers\GalleryPageController:
   extensions:
     - DorsetDigital\SilverstripePhotoswipe\Extensions\GalleryControllerExtension
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - DorsetDigital\SilverstripePhotoswipe\Extensions\ElementalGallerySchemaExtension
