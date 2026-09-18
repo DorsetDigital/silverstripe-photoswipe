@@ -4,14 +4,16 @@ export default defineConfig({
   build: {
     outDir: 'client/dist',
     emptyOutDir: true,
-    lib: {
-      entry: 'client/src/gallery.js',
-      formats: ['es'],
-      fileName: () => 'gallery.js',
-    },
     rollupOptions: {
+      input: {
+        gallery: 'client/src/gallery.js',
+        'gallery-styles': 'client/src/gallery.css',
+        photoswipe: 'client/src/photoswipe.css',
+      },
       output: {
-        assetFileNames: (assetInfo) => assetInfo.name === 'style.css' ? 'gallery.css' : '[name][extname]',
+        entryFileNames: (chunkInfo) => chunkInfo.name === 'gallery' ? 'gallery.js' : '[name].js',
+        chunkFileNames: '[name]-[hash].mjs',
+        assetFileNames: '[name][extname]',
       },
     },
   },
