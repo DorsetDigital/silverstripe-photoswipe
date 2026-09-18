@@ -3,9 +3,11 @@
 namespace DorsetDigital\SilverstripePhotoswipe\Tasks;
 
 use DNADesign\Elemental\Models\BaseElement;
-use SilverStripe\Control\Director;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 if (!class_exists(BaseElement::class)) {
     return;
@@ -17,11 +19,11 @@ class MigrateLegacyElementalGalleriesTask extends BuildTask
     private const NEW_CLASS = 'DorsetDigital\\SilverstripePhotoswipe\\Elements\\GalleryElement';
 
     protected string $title = 'Migrate legacy PhotoSwipe Elemental galleries';
-    protected string $description = 'Updates legacy silverstripe-photoswipe-elemental ClassName values for PhotoSwipe v2.';
+    protected static string $description = 'Updates legacy silverstripe-photoswipe-elemental ClassName values for PhotoSwipe v2.';
 
-    private static string $segment = 'migrate-legacy-photoswipe-elemental-galleries';
+    protected static string $commandName = 'migrate-legacy-photoswipe-elemental-galleries';
 
-    public function run($request): void
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $tables = [
             'ElementalAreaElement',
@@ -51,24 +53,16 @@ class MigrateLegacyElementalGalleriesTask extends BuildTask
                 $table
             ), [self::NEW_CLASS, self::LEGACY_CLASS]);
 
-            $this->output(sprintf('Migrated %d record(s) in %s', $count, $table));
+            $output->writeln(sprintf('Migrated %d record(s) in %s', $count, $table));
         }
 
         if (!$found) {
-            $this->output('No legacy PhotoSwipe Elemental galleries found.');
-            return;
+            $output->writeln('No legacy PhotoSwipe Elemental galleries found.');
+            return Command::SUCCESS;
         }
 
-        $this->output(sprintf('Migration complete: %d record(s) updated.', $found));
-    }
+        $output->writeln(sprintf('Migration complete: %d record(s) updated.', $found));
 
-    private function output(string $message): void
-    {
-        if (Director::is_cli()) {
-            echo $message . PHP_EOL;
-            return;
-        }
-
-        echo htmlspecialchars($message) . '<br>';
+        return Command::SUCCESS;
     }
 }
