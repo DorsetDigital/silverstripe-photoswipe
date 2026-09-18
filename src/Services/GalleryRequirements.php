@@ -18,13 +18,9 @@ class GalleryRequirements
             ['type' => 'module']
         );
 
-        Requirements::css(
-            'dorsetdigital/silverstripe-photoswipe:client/dist/photoswipe.css'
-        );
-
         if (static::config()->get('include_default_css')) {
             Requirements::css(
-                'dorsetdigital/silverstripe-photoswipe:client/dist/gallery.css'
+                'dorsetdigital/silverstripe-photoswipe:client/dist/silverstripe-photoswipe.css'
             );
         }
     }
