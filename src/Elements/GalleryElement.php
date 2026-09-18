@@ -4,6 +4,11 @@ namespace DorsetDigital\SilverstripePhotoswipe\Elements;
 
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\BaseElement;
+
+if (!class_exists(BaseElement::class)) {
+    return;
+}
+
 use DorsetDigital\SilverstripePhotoswipe\Controllers\GalleryElementController;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
