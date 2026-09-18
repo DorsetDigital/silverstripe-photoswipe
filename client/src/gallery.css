@@ -1,0 +1,17 @@
+.photoswipe-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+.photoswipe-gallery__item { margin: 0; }
+.photoswipe-gallery__link { display: block; }
+.photoswipe-gallery__link:focus-visible { outline: 0.2rem solid currentColor; outline-offset: 0.2rem; }
+.photoswipe-gallery__image { display: block; width: 100%; height: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .photoswipe-gallery *, .photoswipe-gallery *::before, .photoswipe-gallery *::after {
+    scroll-behavior: auto !important; transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+  }
+}
