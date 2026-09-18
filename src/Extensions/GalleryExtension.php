@@ -6,6 +6,7 @@ use Bummzack\SortableFile\Forms\SortableUploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Core\Extension;
+use SilverStripe\View\ViewableData;
 
 class GalleryExtension extends Extension
 {
@@ -41,5 +42,16 @@ class GalleryExtension extends Extension
     public function hasGalleryImages(): bool
     {
         return $this->owner->GalleryImages()->exists();
+    }
+
+    public function getGallery(): ?ViewableData
+    {
+        if (!$this->hasGalleryImages()) {
+            return null;
+        }
+
+        return $this->owner->renderWith(
+            'DorsetDigital\\SilverstripePhotoswipe\\Includes\\Gallery'
+        );
     }
 }
