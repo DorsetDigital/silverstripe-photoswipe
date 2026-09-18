@@ -4,7 +4,7 @@
   "type": "silverstripe-vendormodule",
   "license": "BSD-3-Clause",
   "keywords": ["silverstripe", "gallery", "images", "photoswipe"],
-  "authors": [{"name":"Tim Burt - Dorset Digital Ltd","email":"tim@dorsetdigital.net"}],
+  "authors": [{"name":"Tim Burt","email":"tim@dorsetdigital.net"}],
   "require": {
     "php": "^8.3",
     "silverstripe/cms": "^6",
