@@ -1,32 +1,18 @@
 {
   "name": "dorsetdigital/silverstripe-photoswipe",
-  "description": "Allows embedding of a simple Photoswipe-powered gallery on a page",
+  "description": "Responsive PhotoSwipe galleries for Silverstripe CMS",
   "type": "silverstripe-vendormodule",
   "license": "BSD-3-Clause",
-  "keywords": [
-    "silverstripe",
-    "gallery",
-    "images"
-  ],
-  "authors": [
-    {
-      "name": "Tim Burt - Dorset Digital Ltd",
-      "email": "tim@dorset-digital.net"
-    }
-  ],
+  "keywords": ["silverstripe", "gallery", "images", "photoswipe"],
+  "authors": [{"name":"Tim Burt - Dorset Digital Ltd","email":"tim@dorsetdigital.net"}],
   "require": {
-    "silverstripe/cms": "^4.0",
-    "silverstripe/vendor-plugin": "^1.0",
-    "bummzack/sortablefile": "^2.0"
+    "php": "^8.3",
+    "silverstripe/cms": "^6",
+    "bummzack/sortablefile": "^3"
   },
-  "autoload": {
-    "psr-4": {
-      "DorsetDigital\\SilverstripePhotoswipe\\": "src/"
-    }
+  "suggest": {
+    "dnadesign/silverstripe-elemental": "Adds the optional PhotoSwipe gallery Elemental block"
   },
-  "extra": {
-    "expose": [
-      "client/dist"
-    ]
-  }
+  "autoload": {"psr-4":{"DorsetDigital\\SilverstripePhotoswipe\\":"src/"}},
+  "extra": {"expose":["client/dist"]}
 }
