@@ -3,16 +3,35 @@
   "description": "Responsive PhotoSwipe galleries for Silverstripe CMS",
   "type": "silverstripe-vendormodule",
   "license": "BSD-3-Clause",
-  "keywords": ["silverstripe", "gallery", "images", "photoswipe"],
-  "authors": [{"name":"Tim Burt","email":"tim@dorsetdigital.net"}],
+  "keywords": [
+    "silverstripe",
+    "gallery",
+    "images",
+    "photoswipe"
+  ],
+  "authors": [
+    {
+      "name": "Tim Burt",
+      "email": "tim@dorsetdigital.net"
+    }
+  ],
   "require": {
     "php": "^8.3",
     "silverstripe/cms": "^6",
     "bummzack/sortablefile": "^3"
   },
   "suggest": {
-    "dnadesign/silverstripe-elemental": "Adds the optional PhotoSwipe gallery Elemental block"
+    "dnadesign/silverstripe-elemental": "Adds the optional PhotoSwipe gallery Elemental block",
+    "dorsetdigital/silverstripe-schema-manager": "Adds Schema.org ImageGallery structured data for PhotoSwipe galleries"
   },
-  "autoload": {"psr-4":{"DorsetDigital\\SilverstripePhotoswipe\\":"src/"}},
-  "extra": {"expose":["client/dist"]}
+  "autoload": {
+    "psr-4": {
+      "DorsetDigital\\SilverstripePhotoswipe\\": "src/"
+    }
+  },
+  "extra": {
+    "expose": [
+      "client/dist"
+    ]
+  }
 }
