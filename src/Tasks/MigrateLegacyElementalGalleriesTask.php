@@ -16,8 +16,8 @@ class MigrateLegacyElementalGalleriesTask extends BuildTask
     private const LEGACY_CLASS = 'DorsetDigital\\Elements\\PhotoSwipe\\Models\\Gallery';
     private const NEW_CLASS = 'DorsetDigital\\SilverstripePhotoswipe\\Elements\\GalleryElement';
 
-    protected $title = 'Migrate legacy PhotoSwipe Elemental galleries';
-    protected $description = 'Updates legacy silverstripe-photoswipe-elemental ClassName values for PhotoSwipe v2.';
+    protected string $title = 'Migrate legacy PhotoSwipe Elemental galleries';
+    protected string $description = 'Updates legacy silverstripe-photoswipe-elemental ClassName values for PhotoSwipe v2.';
 
     private static string $segment = 'migrate-legacy-photoswipe-elemental-galleries';
 
