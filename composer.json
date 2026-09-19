@@ -22,7 +22,7 @@
   },
   "suggest": {
     "dnadesign/silverstripe-elemental": "Adds the optional PhotoSwipe gallery Elemental block",
-    "dorsetdigital/silverstripe-schema-manager": "Adds Schema.org ImageGallery structured data for PhotoSwipe galleries"
+    "dorsetdigital/silverstripe-schema-manager": "Automatically adds Schema.org ImageGallery structured data for Gallery Pages, page galleries and Elemental gallery blocks"
   },
   "autoload": {
     "psr-4": {

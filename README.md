@@ -74,6 +74,24 @@ Elemental is an optional dependency. When `dnadesign/silverstripe-elemental` is 
 
 A project without Elemental can install and use this module normally. If Elemental is installed later, run `dev/build flush=1` and the gallery element will become available.
 
+## Schema.org structured data
+
+The module optionally integrates with `dorsetdigital/silverstripe-schema-manager`. When Schema Manager is installed, PhotoSwipe galleries automatically contribute Schema.org `ImageGallery` structured data to the page's JSON-LD graph.
+
+This applies to:
+
+- the bundled `GalleryPage`
+- galleries added to custom page types with `GalleryExtension`
+- PhotoSwipe Gallery Elemental blocks
+
+A dedicated `GalleryPage` promotes its `ImageGallery` to the page's main entity. Galleries embedded in other pages are linked to the page as supplementary entities instead. Multiple galleries on the same page receive distinct schema entity IDs.
+
+Schema Manager is optional and no additional PhotoSwipe configuration is required. Install it separately if structured-data output is wanted:
+
+```bash
+composer require dorsetdigital/silverstripe-schema-manager
+```
+
 ## Frontend and styling
 
 Gallery images are rendered as ordinary links, so the gallery remains usable without JavaScript. PhotoSwipe progressively enhances those links into the lightbox.
